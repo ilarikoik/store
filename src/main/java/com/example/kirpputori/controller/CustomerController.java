@@ -28,6 +28,7 @@ public class CustomerController {
     public ResponseEntity<ApiResponse> addCustomer(@RequestBody Customer customer) {
         ApiResponse res = customerService.saveCustomer(customer);
 
+        // is.Success on Apiresponse metodi joka hakee objektin success tilan
         if (!res.isSuccess()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
         }
