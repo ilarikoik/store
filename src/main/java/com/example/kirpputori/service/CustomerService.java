@@ -42,8 +42,16 @@ public class CustomerService {
         }
     }
 
-    public Optional<Customer> findCustomerById(Long id) {
-        return repository.findById(id);
+    public ApiResponse findCustomerById(Long id) {
+        try {
+            Optional<Customer> customer = repository.findById(id);
+            if (customer.isPresent()) {
+                return ApiResponse.success(customer);
+            }
+            return ApiResponse.error("User not found");
+        } catch (Exception e) {
+            return ApiResponse.error(e.getMessage());
+        }
     }
 
     public void deleteCustomerById(Long id) {

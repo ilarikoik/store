@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api")
@@ -38,6 +40,19 @@ public class AdminController {
     @GetMapping("/admin")
     public List<Admin> getAllCustomers() {
         return adminService.findAllAdmins();
+    }
+
+    @GetMapping("/admin/{id}")
+    public ResponseEntity<ApiResponse> getMethodName(@PathVariable Long id) {
+        ApiResponse res = adminService.findAdminById(id);
+        if (res.isSuccess()) {
+            return ResponseEntity
+                    .status(HttpStatus.FOUND)
+                    .body(res);
+        }
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(res);
     }
 
 }

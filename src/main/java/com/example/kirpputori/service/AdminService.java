@@ -42,8 +42,16 @@ public class AdminService {
         }
     }
 
-    public Optional<Admin> findAdminById(Long id) {
-        return repository.findById(id);
+    public ApiResponse findAdminById(Long id) {
+        try {
+            Optional<Admin> user = repository.findById(id);
+            if (user.isPresent()) {
+                return ApiResponse.success(user);
+            }
+        } catch (Exception e) {
+            return ApiResponse.error(e.getMessage());
+        }
+        return ApiResponse.error("User not found");
     }
 
     public void deleteAdminById(Long id) {
@@ -51,6 +59,7 @@ public class AdminService {
     }
 
     // utils
+    // --------------------------------------------------------------------------
     private boolean userExists(String username) {
         return repository.findByUsername(username).isPresent();
     }
