@@ -12,16 +12,16 @@ import com.example.kirpputori.repository.BookRepository;
 @Service
 public class BookService {
 
-    // @Autowired // joko konstruktori viittaa tähä tai sit tää autowire, jompi
-    // kumpi
+    // joko konstruktori viittaa tähä tai sit tää autowire
+    @Autowired
     private BookRepository bookRepository;
 
     @Autowired
     ApiResponse apiResponse;
 
-    public BookService(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
+    // public BookService(BookRepository bookRepository) {
+    // this.bookRepository = bookRepository;
+    // }
 
     public ApiResponse findAll() {
         List<Book> books = bookRepository.findAll();
