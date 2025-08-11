@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.kirpputori.dataTransferObject.ApiResponse;
-import com.example.kirpputori.model.User.Admin;
 import com.example.kirpputori.model.User.Customer;
 import com.example.kirpputori.repository.CustomerRepository;
 import com.example.kirpputori.util.UserValidation;
@@ -17,6 +16,9 @@ public class CustomerService {
 
     @Autowired
     private CustomerRepository repository;
+
+    @Autowired
+    ApiResponse apiResponse;
 
     public CustomerService(CustomerRepository repository) {
         this.repository = repository;
@@ -29,16 +31,16 @@ public class CustomerService {
     public ApiResponse saveCustomer(Customer customer) {
         try {
             if (userExists(customer.getUsername())) {
-                return ApiResponse.error("User already exists");
+                return apiResponse.error("User already exists");
             }
 
             if (!UserValidation.isValidUser(customer)) {
-                return ApiResponse.error("Invalid parameters");
+                return apiResponse.error("Invalid parameters");
             }
             repository.save(customer);
-            return ApiResponse.success(customer);
+            return apiResponse.success(customer);
         } catch (Exception e) {
-            return ApiResponse.error(e.getMessage());
+            return apiResponse.error(e.getMessage());
         }
     }
 
@@ -46,11 +48,11 @@ public class CustomerService {
         try {
             Optional<Customer> customer = repository.findById(id);
             if (customer.isPresent()) {
-                return ApiResponse.success(customer);
+                return apiResponse.success(customer);
             }
-            return ApiResponse.error("User not found");
+            return apiResponse.error("User not found");
         } catch (Exception e) {
-            return ApiResponse.error(e.getMessage());
+            return apiResponse.error(e.getMessage());
         }
     }
 

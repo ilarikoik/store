@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api")
@@ -24,7 +23,7 @@ public class AdminController {
 
     @PostMapping("/admin")
     public ResponseEntity<ApiResponse> addCustomer(@RequestBody Admin admin) {
-        ApiResponse response = adminService.saveAdmin(admin); // service palauttaa viestin
+        ApiResponse response = adminService.saveAdmin(admin); // service palauttaa viestin + obj
 
         if (!response.isSuccess()) {
             return ResponseEntity
@@ -45,6 +44,8 @@ public class AdminController {
     @GetMapping("/admin/{id}")
     public ResponseEntity<ApiResponse> getMethodName(@PathVariable Long id) {
         ApiResponse res = adminService.findAdminById(id);
+
+        // is.Success on Apiresponse metodi joka hakee objektin success tilan
         if (res.isSuccess()) {
             return ResponseEntity
                     .status(HttpStatus.FOUND)

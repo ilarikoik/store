@@ -13,7 +13,6 @@ public class Customer extends AppUser {
 
     public Customer(String name, String password) {
         super(name, password);
-        this.role = "Customer";
     }
 
     public String getRole() {
