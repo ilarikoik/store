@@ -14,12 +14,15 @@ import com.example.kirpputori.util.UserValidation;
 @Service
 public class AdminService {
 
-    @Autowired
+    // @Autowired
     private AdminRepository repository;
 
     @Autowired
     ApiResponse apiResponse;
 
+    // asetetaan konstruktorille repo heti tässä niin ei tartte alkaa myöhemmin aina
+    // antelee sitä parametrinä
+    // muualla voi suoraan vaan kutsua konstruktori + metodi
     public AdminService(AdminRepository repository) {
         this.repository = repository;
     }
