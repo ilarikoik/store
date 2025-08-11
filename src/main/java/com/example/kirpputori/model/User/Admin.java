@@ -12,15 +12,10 @@ public class Admin extends AppUser {
 
     public Admin(String name, String password) {
         super(name, password);
-        this.role = "Admin";
     }
 
     public String getRole() {
         return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 
     @Override

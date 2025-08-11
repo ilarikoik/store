@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.kirpputori.dataTransferObject.ApiResponse;
@@ -15,9 +14,15 @@ import com.example.kirpputori.util.UserValidation;
 @Service
 public class AdminService {
 
-    @Autowired
+    // @Autowired
     private AdminRepository repository;
 
+    @Autowired
+    ApiResponse apiResponse;
+
+    // asetetaan konstruktorille repo heti tässä niin ei tartte alkaa myöhemmin aina
+    // antelee sitä parametrinä
+    // muualla voi suoraan vaan kutsua konstruktori + metodi
     public AdminService(AdminRepository repository) {
         this.repository = repository;
     }
@@ -29,16 +34,16 @@ public class AdminService {
     public ApiResponse saveAdmin(Admin admin) {
         try {
             if (userExists(admin.getUsername())) {
-                return ApiResponse.error("User already exists");
+                return apiResponse.error("User already exists");
             }
             if (!UserValidation.isValidUser(admin)) {
-                return ApiResponse.error("Invalid parameters");
+                return apiResponse.error("Invalid parameters");
             }
             repository.save(admin);
-            return ApiResponse.success(admin);
+            return apiResponse.success(admin);
 
         } catch (Exception e) {
-            return ApiResponse.error(e.getMessage());
+            return apiResponse.error(e.getMessage());
         }
     }
 
@@ -46,12 +51,12 @@ public class AdminService {
         try {
             Optional<Admin> user = repository.findById(id);
             if (user.isPresent()) {
-                return ApiResponse.success(user);
+                return apiResponse.success(user);
             }
         } catch (Exception e) {
-            return ApiResponse.error(e.getMessage());
+            return apiResponse.error(e.getMessage());
         }
-        return ApiResponse.error("User not found");
+        return apiResponse.error("User not found");
     }
 
     public void deleteAdminById(Long id) {

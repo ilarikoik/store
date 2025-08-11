@@ -1,5 +1,8 @@
 package com.example.kirpputori.dataTransferObject;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ApiResponse {
 
     private boolean success;
@@ -39,12 +42,12 @@ public class ApiResponse {
         this.data = data;
     }
 
-    public static ApiResponse success(Object data) {
+    public ApiResponse success(Object data) {
         String className = data != null ? data.getClass().getSimpleName() : "Object";
         return new ApiResponse(true, className + " added successfully", data);
     }
 
-    public static ApiResponse error(String message) {
+    public ApiResponse error(String message) {
         return new ApiResponse(false, message, null);
     }
 }
