@@ -20,10 +20,6 @@ public class CustomerService {
     @Autowired
     ApiResponse apiResponse;
 
-    public CustomerService(CustomerRepository repository) {
-        this.repository = repository;
-    }
-
     public List<Customer> findAllCustomers() {
         return repository.findAll();
     }
