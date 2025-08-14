@@ -53,8 +53,14 @@ public class BookService {
     public ApiResponse addBookWithImages(Book book, List<MultipartFile> images) {
         try {
             List<ProductImage> setImages = new ArrayList<>();
+            // multipartFile on siis apuväline jolla voidaan saada tiedostoista tiedot
+            // joista rakennetaan tarvittava olio
             for (MultipartFile file : images) {
+                // muokataan tiedoston file ProductImage olioiksi jotta ne voidaan listätä
+                // book olioon listana
                 ProductImage img = productImageService.store(file, book);
+                // book eikä book.getProduct koska se on abstract jolloin ne tiedot pitää antaa
+                // aliluokalle , perjaatteessa product ja book on yksi luokka vaan
                 setImages.add(img);
             }
             book.setImages(setImages);

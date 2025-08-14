@@ -16,21 +16,15 @@ import com.example.kirpputori.model.User.Product.ProductImage;
 @Service
 public class ProductImageService {
 
-    // public String store(MultipartFile file) throws IOException {
-    // String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-    // Path path = Paths.get("uploads").resolve(fileName);
-    // Files.createDirectories(path.getParent());
-    // Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-    // return "/uploads/" + fileName;
-    // }
-
+    // muokataan tiedoston tiedot ProductImage olioiksi jotta ne voidaan listätä
+    // book olioon listana
     public ProductImage store(MultipartFile file, Product product) throws IOException {
         ProductImage img = new ProductImage();
         img.setFileName(file.getOriginalFilename());
         img.setContentType(file.getContentType());
         img.setData(file.getBytes());
         img.setProduct(product);
-        return img; // Tämän ProductImage-olion tallennat repositoryn kautta
+        return img;
     }
 
 }
