@@ -1,12 +1,16 @@
 package com.example.kirpputori.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.example.kirpputori.dataTransferObject.ApiResponse;
 import com.example.kirpputori.model.User.Product.Book;
+import com.example.kirpputori.model.User.Product.ProductImage;
 import com.example.kirpputori.repository.BookRepository;
 
 @Service
@@ -18,6 +22,9 @@ public class BookService {
 
     @Autowired
     ApiResponse apiResponse;
+
+    @Autowired
+    ProductImageService productImageService;
 
     // public BookService(BookRepository bookRepository) {
     // this.bookRepository = bookRepository;
@@ -36,6 +43,21 @@ public class BookService {
             if (book.getName().isEmpty() || book.getPrice() < 1) {
                 return apiResponse.error("invalid parameters");
             }
+            bookRepository.save(book);
+            return apiResponse.success(book);
+        } catch (Exception e) {
+            return apiResponse.error("500, " + e.getMessage());
+        }
+    }
+
+    public ApiResponse addBookWithImages(Book book, List<MultipartFile> images) {
+        try {
+            List<ProductImage> setImages = new ArrayList<>();
+            for (MultipartFile file : images) {
+                ProductImage img = productImageService.store(file, book);
+                setImages.add(img);
+            }
+            book.setImages(setImages);
             bookRepository.save(book);
             return apiResponse.success(book);
         } catch (Exception e) {

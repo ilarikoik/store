@@ -1,5 +1,7 @@
 package com.example.kirpputori.model.User.Product;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 
 @Entity
@@ -13,8 +15,8 @@ public class Book extends Product {
         super();
     }
 
-    public Book(String name, double price, String description, String isbn, String author) {
-        super(name, price, description);
+    public Book(String name, double price, String description, List<ProductImage> images, String isbn, String author) {
+        super(name, price, description, images);
         this.isbn = isbn;
         this.author = author;
     }

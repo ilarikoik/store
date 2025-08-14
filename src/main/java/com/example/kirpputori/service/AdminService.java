@@ -20,9 +20,10 @@ public class AdminService {
     @Autowired
     ApiResponse apiResponse;
 
-    // asetetaan konstruktorille repo heti tässä niin ei tartte alkaa myöhemmin aina
-    // antelee sitä parametrinä
-    // muualla voi suoraan vaan kutsua konstruktori + metodi
+    // luodaan yhteys repositoryyn kun kutsutaan konstruktoria
+    // kun AdminService-olio luodaan sen konstruktori saa parametrinaan
+    // AdminRepository-instanssin, ja se tallennetaan
+    // this.repository-kenttään käyttöä varten.
     public AdminService(AdminRepository repository) {
         this.repository = repository;
     }
